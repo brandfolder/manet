@@ -259,6 +259,9 @@ Few rules:
   <dt>callback</dt>
   <dd>Return an empty response immediately (HTTP 200 OK), then send a POST request to the callback URL when the screenshot is ready (with image in the body).</dd>
 
+  <dt>resizeToWidth</dt>
+  <dd>Resize the returned image to a given width.</dd>
+
 </dl>
 
 
@@ -320,7 +323,6 @@ GET /?url=google.com&headers=User-Agent=Firefox;Accept-Charset=utf-8
 # Asynchronous call.
 GET /?url=github.com&callback=http://localhost:8891
 ```
-
 
 ## Sandbox UI
 

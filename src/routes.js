@@ -33,7 +33,8 @@ function createSchema() {
         images: joi.boolean(),
         user: joi.string().trim(),
         password: joi.string().trim(),
-        callback: joi.string().trim()
+        callback: joi.string().trim(),
+        resizeToWidth: joi.number().integer().min(1)
     });
 }
 

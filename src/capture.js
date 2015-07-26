@@ -6,6 +6,7 @@ var _ = require('lodash'),
     path = require('path'),
     squirrel = require('squirrel'),
     utils = require('./utils'),
+    gm = require('gm'),
 
     SCRIPT_FILE = 'scripts/screenshot.js',
 
@@ -100,15 +101,37 @@ function screenshot(options, config, onFinish) {
     var opts = cleanupOptions(options, config),
         base64 = utils.encodeBase64(opts),
         file = outputFile(opts, config, base64),
+        result,
 
         retrieveImageFromStorage = function () {
+            var error = null;
             logger.debug('Take screenshot from file storage: %s', base64);
-            onFinish(file, null);
+            if (options.resizeToWidth){
+                var resizedFile = path.dirname(file) + '/' + path.basename(file, path.extname(file)) + '-' + options.resizeToWidth + path.extname(file);
+                return gm(file)
+                    .resize(options.resizeToWidth)
+                    .write(resizedFile, function (err) {
+                      if (err) { error = err };
+                      onFinish(resizedFile, error);
+                    });
+            } else {
+                return onFinish(file, error);
+            }
         },
         retrieveImageFromSite = function () {
             runCapturingProcess(opts, config, file, base64, function (error) {
                 logger.debug('Process finished work: %s', base64);
-                return onFinish(file, error);
+                if (options.resizeToWidth){
+                    var resizedFile = path.dirname(file) + '/' + path.basename(file, path.extname(file)) + '-' + options.resizeToWidth + path.extname(file);
+                    return gm(file)
+                        .resize(options.resizeToWidth)
+                        .write(resizedFile, function (err) {
+                          if (err) { error = err };
+                          onFinish(resizedFile, error);
+                        });
+                } else {
+                    return onFinish(file, error);
+                }
             });
         };
 
