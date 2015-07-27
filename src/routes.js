@@ -150,6 +150,7 @@ function index(config) {
         if (data.error) {
             res.json(error(data.error.details));
         } else {
+            res.setHeader('Cache-Control', 'public, max-age=' + config.cache);
             var options = readOptions(data.value, schema),
                 siteUrl = options.url;
 
