@@ -39,6 +39,7 @@ ENV LOG_LEVEL debug
 ENV UI_ENABLED false
 ENV WINDOW_WIDTH 1280
 ENV WINDOW_HEIGHT 800
+ENV RESIZE_TO_WIDTH $WINDOW_WIDTH
 ENV WINDOW_SCROLL_X 0
 ENV WINDOW_SCROLL_Y 0
 EXPOSE $PORT
@@ -50,6 +51,7 @@ CMD PATH=/slimerjs-0.9.6:$PATH ./bin/manet \
     --options:format $FORMAT \
     --options:width $WINDOW_WIDTH \
     --options:height $WINDOW_HEIGHT \
+    --options:resizeToWidth $RESIZE_TO_WIDTH \
     --options:clipRect $WINDOW_SCROLL_X,$WINDOW_SCROLL_Y,$WINDOW_WIDTH,$WINDOW_HEIGHT \
     --engine slimerjs \
     --command "xvfb-run -a slimerjs --debug=true" \
