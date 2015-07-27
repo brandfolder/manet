@@ -24,7 +24,6 @@ RUN apt-get install -y \
 
 # Install Runtime Dependencies
 RUN curl -sSL http://download.slimerjs.org/releases/0.9.6/slimerjs-0.9.6-linux-x86_64.tar.bz2 | tar -xj
-ENV PATH slimerjs-0.9.6:$PATH
 
 # Install Application
 ADD . /app
@@ -40,7 +39,7 @@ ENV UI_ENABLED false
 EXPOSE $PORT
 
 # Run Application
-CMD ./bin/manet \
+CMD PATH=/slimerjs-0.9.6:$PATH ./bin/manet \
     --port $PORT \
     --options:format $FORMAT \
     --engine slimerjs \
