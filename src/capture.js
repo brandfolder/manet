@@ -106,10 +106,10 @@ function screenshot(options, config, onFinish) {
         retrieveImageFromStorage = function () {
             var error = null;
             logger.debug('Take screenshot from file storage: %s', base64);
-            if (options.resizeToWidth){
-                var resizedFile = path.dirname(file) + '/' + path.basename(file, path.extname(file)) + '-' + options.resizeToWidth + path.extname(file);
+            if (opts.resizeToWidth){
+                var resizedFile = path.dirname(file) + '/' + path.basename(file, path.extname(file)) + '-' + opts.resizeToWidth + path.extname(file);
                 return gm(file)
-                    .resize(options.resizeToWidth)
+                    .resize(opts.resizeToWidth)
                     .write(resizedFile, function (err) {
                       if (err) { error = err };
                       onFinish(resizedFile, error);
@@ -121,10 +121,10 @@ function screenshot(options, config, onFinish) {
         retrieveImageFromSite = function () {
             runCapturingProcess(opts, config, file, base64, function (error) {
                 logger.debug('Process finished work: %s', base64);
-                if (options.resizeToWidth){
-                    var resizedFile = path.dirname(file) + '/' + path.basename(file, path.extname(file)) + '-' + options.resizeToWidth + path.extname(file);
+                if (opts.resizeToWidth){
+                    var resizedFile = path.dirname(file) + '/' + path.basename(file, path.extname(file)) + '-' + opts.resizeToWidth + path.extname(file);
                     return gm(file)
-                        .resize(options.resizeToWidth)
+                        .resize(opts.resizeToWidth)
                         .write(resizedFile, function (err) {
                           if (err) { error = err };
                           onFinish(resizedFile, error);
